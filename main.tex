@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{wrapfig}
 \usepackage{pdfpages}
+\usepackage{changepage}
+\usepackage{minted}
 \title{Ikimono}
 \author{Evan Wrynn }
 \date{BSC1B}
@@ -12,8 +14,11 @@
 \begin{document}
 
 \maketitle
-The \LaTeX\space code for this document is present on GitHub 
-\section{Introduction}
+\begin{center}
+The \LaTeX\space code for this document is present on GitHub \\
+https://github.com/theopathy/Ikimono-University-Doc/main.tex
+\end{center}
+\section{Introduction} 
 Ikimono is an RPG game based heavily by the original Pokémon games. The game name Ikimono ( \begin{CJK}{UTF8}{min}生き物\end{CJK} ) is Japanese for creatures. The game will be using WebGL and JavaScript to offer an experience similar to the one that is offered by the Pokémon franchise while still being a breath of fresh air to the games that inspired it. Due to the game being a prototype I will be using assets that will not be used in the final product to ensure that the mechanics of game are in place instead of hindering mechanics due to creating assets at this stage. During this Creature or Creatures refers to each Ikimono. This is done to avoid confusion.
 
 
@@ -75,8 +80,27 @@ $$ It then sets a variable called 'MoveEffectivenesss' to 1, and it compares bot
 \section{Species}
 As stated in the above section each creature belongs to a species, the species are stored within a JSON file, which stores details about them.
 \includegraphics[scale=0.76]{Class.pdf}\newpage
-After populating 10 creatures by hand taken roughly an hour to do, I decided to make a spreadsheet and then 
+After populating 10 creatures by hand taken roughly an hour to do, I decided to make a spreadsheet. Then I wrote a script to export the spreadsheet to JSON in the proper formatting I needed for the game. Below is an example of the spreadsheet...\\
+
+\begin{adjustwidth}{-127pt}{100pt}
+\includegraphics[scale=1.2]{pdfs/Ikimono_sheet.pdf}
+\end{adjustwidth}
+\nepwage ...and below this is the code to export the spreadsheet to JSON.
+\include{script}
+
 \newpage
+\section{Battle}
+There are three stages of the battle these are;
+\subsection{Generation}
+Within this stage, the game generates the creature you're going to encounter, or prepare for an NPC encounter, during this stage the Battle entity is created, and then is populated with the encounter type, if it's a wild creature it will then randomly generate stats, level, its shiny type, gender, etc. It will then start the tweening animation and then transition to the combat. 
+\subsection{Combat}
+In combat, there is a simple flow in which the combat progresses. The diagram below shows this. The game checks death every-time damage is dealt, when the creature is dead it progress to the end state.
+\begin{center}
+\includegraphics[scale=1.2]{pdfs/combatflow.pdf}
+\end{center}
+
+\subsection{End}
+If you are the one that died, you're creatures are healed and you are teleported to the nearest Creature Health Centre. If you win, then your creatures in your party are awarded experience and the creature that contributed the most gets an increase in power. It then returns you to the overworld.
 \bibliographystyle{plain}
 \bibliography{references}
 \end{document}

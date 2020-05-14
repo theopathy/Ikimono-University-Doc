@@ -1,0 +1,43 @@
+\begin{minted}{javascript}
+function onOpen() {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var menuEntries = [{
+            name: "Export as JSON",
+            functionName: "exportSheet"
+        }
+    ];ss.addMenu("Ikimono Tools", menuEntries);}
+
+var COLs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+var HeX = {
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+    10: true,
+    11: true,
+    12: true
+}
+
+function exportSheet() {
+    var ui = SpreadsheetApp.getUi();
+    let Ikimonos = {};
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheets()[0];
+    var range = sheet.getRange("A1:Z100");
+    for (let step = 2; step < 100; step++) {
+        if (range.getCell(step, 2).getValue() == "") break;
+        let Ikimono = {};
+        COLs.forEach(function(n) {
+            var vv = range.getCell(step, n).getValue();
+            if (HeX[n])
+                vv = Number(vv)
+            Ikimono[range.getCell(1, n).getValue()] = vv;
+        })
+        Ikimonos[range.getCell(step, 2).getValue()] = Ikimono;
+    }
+
+    ui.alert(JSON5.stringify(Ikimonos))
+
+}
+\end{minted}
